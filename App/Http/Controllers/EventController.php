@@ -23,6 +23,8 @@ class EventController extends Controller
         $event->description = $request->description;
         $event->private = $request->private;
         $event->city = $request->city;
+        $event->items = $request->items;
+        $event->date = $request->date;
         
         // tratando o recebimento de imagem
         if($request->hasFile('image')&& $request->file('image')->isValid()){
@@ -42,6 +44,12 @@ class EventController extends Controller
         $event->save();
 
         return redirect('/')->with('msg','Deu Certo!');
+    }
+
+
+    public function show($id){
+        $event = Event::findOrFail($id);
+        return view('events.show',['event'=> $event]);
     }
 
 }
